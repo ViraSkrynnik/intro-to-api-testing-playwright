@@ -31,3 +31,32 @@ test('post order with correct data should receive code 201', async ({ request })
   console.log('response body:', await response.json())
   expect(response.status()).toBe(StatusCodes.OK)
 })
+
+test('get order with orderId 0 should receive code 400', async ({ request }) => {
+  const response = await request.get('https://backend.tallinn-learning.ee/test-orders/0');
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST);
+})
+
+test('get order with orderId 11 should receive code 400', async ({ request }) => {
+  const response = await request.get('https://backend.tallinn-learning.ee/test-orders/11');
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST);
+})
+
+test('get order with orderId null should receive code 500', async ({ request }) => {
+  const response = await request.get('https://backend.tallinn-learning.ee/test-orders/');
+  expect(response.status()).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
+})
+
+test('get order with orderId = test should receive code 400', async ({ request }) => {
+  const response = await request.get('https://backend.tallinn-learning.ee/test-orders/test');
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST);
+})
+
+test('post order with correct data should receive code 415', async ({ request }) => {
+  const response = await request.post('https://backend.tallinn-learning.ee/test-orders', {
+    data: 'test',
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.UNSUPPORTED_MEDIA_TYPE)
+})
