@@ -58,7 +58,7 @@ test.describe('Lesson 9', (): void => {
 })
 
 test.describe('PUT endpoint', () => {
-  function putRequestBody(): {
+  function getRequestBody(): {
     status: string
     courierId: number
     customerName: string
@@ -76,7 +76,7 @@ test.describe('PUT endpoint', () => {
     }
   }
   test('Change order with id 1 should return 200', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/1',
@@ -89,7 +89,7 @@ test.describe('PUT endpoint', () => {
   })
 
   test('Change order with id 5 should return 200', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/5',
@@ -102,7 +102,7 @@ test.describe('PUT endpoint', () => {
   })
 
   test('Change order with id 10 should return 200', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/10',
@@ -115,7 +115,7 @@ test.describe('PUT endpoint', () => {
   })
 
   test('Change order with id 0 should return 400', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/0',
@@ -128,7 +128,7 @@ test.describe('PUT endpoint', () => {
   })
 
   test('Change order with id 11 should return 400', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/11',
@@ -141,7 +141,7 @@ test.describe('PUT endpoint', () => {
   })
 
   test('Change order with id null should return 405', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/',
@@ -154,7 +154,7 @@ test.describe('PUT endpoint', () => {
   })
 
   test('Change order with id test should return 400', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/test',
@@ -167,7 +167,7 @@ test.describe('PUT endpoint', () => {
   })
 
   test('Change order with incorrect api-key should return 401', async ({ request }) => {
-    const requestBody = putRequestBody()
+    const requestBody = getRequestBody()
     const requestHeaders: { api_key: string } = { api_key: '123456789012345' }
     const response: APIResponse = await request.put(
       'https://backend.tallinn-learning.ee/test-orders/1',
