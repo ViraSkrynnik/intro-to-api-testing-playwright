@@ -4,10 +4,10 @@ import { StatusCodes } from 'http-status-codes'
 import { RiskScoreCalculatorDto } from './dto/risk-score-dto'
 
 test.describe('Risk Score Calculator', () => {
-  test('Unsuccessful risk score calculation with null data in the body; 400', async ({
+  test('Unsuccessful risk score calculation with 0 data in the body; 400', async ({
     request,
   }) => {
-    const requestBody = new RiskScoreCalculatorDto(null, null, null, true, null, null)
+    const requestBody = new RiskScoreCalculatorDto(0, 0, 0, true, 0, 0)
     const response = await request.post(
       'https://backend.tallinn-learning.ee/api/loan-calc/decision',
       {
