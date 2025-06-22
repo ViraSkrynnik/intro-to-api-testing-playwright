@@ -29,10 +29,10 @@ Testing GET endpoint
 
 Testing Risk Score POST endpoint
 
-|  №  | Name                                                                        |                                 Testing data                                 |
-|:---:|:----------------------------------------------------------------------------|:----------------------------------------------------------------------------:|
-|  1  | Unsuccessful risk score calculation with null data in the body; 400         | income:null,debt:null,age:null,employed:true,loanAmount:null,loanPeriod:null |
-|  2  | Unsuccessful risk score calculation with invalid data in the debt, age; 400 |      income:1,debt:-5,age:15,employed:true,loanAmount:500,loanPeriod:6       |
-|  3  | Successful positive low risk level calculation; 200                         |    income:20000,debt:0,age:30,employed:true,loanAmount:500,loanPeriod:12     |
-|  4  | Successful positive medium risk level calculation; 200                      |     income:20000,debt:0,age:30,employed:true,loanAmount:500,loanPeriod:6     |
-|  5  | Successful negative high risk level calculation; 200                        |     income:100,debt:0,age:17,employed:true,loanAmount:1000,loanPeriod:12     |
+|  №  | Name                                                                        |                             Testing data                              |
+|:---:|:----------------------------------------------------------------------------|:---------------------------------------------------------------------:|
+|  1  | Unsuccessful risk score calculation with 0 in the body; 400                 |     income:0,debt:0,age:0,employed:true,loanAmount:0,loanPeriod:0     |
+|  2  | Unsuccessful risk score calculation with invalid data in the debt, age; 400 |   income:1,debt:-5,age:15,employed:true,loanAmount:500,loanPeriod:6   |
+|  3  | Successful positive low risk level calculation; 200                         | income:20000,debt:0,age:30,employed:true,loanAmount:500,loanPeriod:12 |
+|  4  | Successful positive medium risk level calculation; 200                      | income:20000,debt:0,age:30,employed:true,loanAmount:500,loanPeriod:6  |
+|  5  | Successful negative high risk level calculation; 200                        | income:100,debt:0,age:17,employed:true,loanAmount:1000,loanPeriod:12  |
