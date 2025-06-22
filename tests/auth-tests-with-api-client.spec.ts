@@ -1,4 +1,4 @@
-import { test , expect } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { ApiClient } from './api-client'
 import { StatusCodes } from 'http-status-codes'
 
@@ -16,4 +16,3 @@ test('Successful login and delete existed order with api client', async ({ reque
   expect.soft(response.status()).toBe(StatusCodes.OK)
   expect.soft(responseBody).toBeTruthy()
 })
-

@@ -12,7 +12,7 @@ export class RiskScoreCalculatorDto {
     age: number,
     employed: boolean,
     loanAmount: number,
-    loanPeriod: number
+    loanPeriod: number,
   ) {
     this.income = income
     this.debt = debt

@@ -3,37 +3,61 @@ import { expect, test } from '@playwright/test'
 import { StatusCodes } from 'http-status-codes'
 import { RiskScoreCalculatorDto } from './dto/risk-score-dto'
 
-
 test.describe('Risk Score Calculator', () => {
-  test('Unsuccessful risk score calculation with null data in the body; 400', async ({request}) => {
-    const requestBody = new RiskScoreCalculatorDto(null, null, null, true, null, null);
-    const response = await request.post('https://backend.tallinn-learning.ee/api/loan-calc/decision', {
-      data: requestBody,
-    })
+  test('Unsuccessful risk score calculation with null data in the body; 400', async ({
+    request,
+  }) => {
+    const requestBody = new RiskScoreCalculatorDto(null, null, null, true, null, null)
+    const response = await request.post(
+      'https://backend.tallinn-learning.ee/api/loan-calc/decision',
+      {
+        data: requestBody,
+      },
+    )
     expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
   })
 
-  test('Unsuccessful risk score calculation with invalid data in the debt; 400', async ({request}) => {
-    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(1,-5,17,true,500,6);
-    const response = await request.post('https://backend.tallinn-learning.ee/api/loan-calc/decision', {
-      data: requestBody,
-    })
+  test('Unsuccessful risk score calculation with invalid data in the debt; 400', async ({
+    request,
+  }) => {
+    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(1, -5, 17, true, 500, 6)
+    const response = await request.post(
+      'https://backend.tallinn-learning.ee/api/loan-calc/decision',
+      {
+        data: requestBody,
+      },
+    )
     expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
   })
 
-  test('Unsuccessful risk score calculation with invalid data in the age; 400', async ({request}) => {
-    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(1,0,10,true,500,6);
-    const response = await request.post('https://backend.tallinn-learning.ee/api/loan-calc/decision', {
-      data: requestBody,
-    })
+  test('Unsuccessful risk score calculation with invalid data in the age; 400', async ({
+    request,
+  }) => {
+    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(1, 0, 10, true, 500, 6)
+    const response = await request.post(
+      'https://backend.tallinn-learning.ee/api/loan-calc/decision',
+      {
+        data: requestBody,
+      },
+    )
     expect.soft(response.status()).toBe(StatusCodes.OK)
   })
 
-  test('Successful positive low risk level calculation; 200', async ({request}) => {
-    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(20000,0,30,true,500,12);
-    const response = await request.post('https://backend.tallinn-learning.ee/api/loan-calc/decision', {
-      data: requestBody,
-    })
+  test('Successful positive low risk level calculation; 200', async ({ request }) => {
+    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(
+      20000,
+      0,
+      30,
+      true,
+      500,
+      12,
+    )
+    const response = await request.post(
+      'https://backend.tallinn-learning.ee/api/loan-calc/decision',
+      {
+        data: requestBody,
+      },
+    )
     const body = await response.json()
 
     expect.soft(response.status()).toBe(StatusCodes.OK)
@@ -44,11 +68,21 @@ test.describe('Risk Score Calculator', () => {
     expect.soft(body.applicationId).toBeDefined()
   })
 
-  test('Successful positive medium risk level calculation; 200', async ({request}) => {
-    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(20000,0,30,true,500,6);
-    const response = await request.post('https://backend.tallinn-learning.ee/api/loan-calc/decision', {
-      data: requestBody,
-    })
+  test('Successful positive medium risk level calculation; 200', async ({ request }) => {
+    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(
+      20000,
+      0,
+      30,
+      true,
+      500,
+      6,
+    )
+    const response = await request.post(
+      'https://backend.tallinn-learning.ee/api/loan-calc/decision',
+      {
+        data: requestBody,
+      },
+    )
     const body = await response.json()
 
     expect.soft(response.status()).toBe(StatusCodes.OK)
@@ -59,11 +93,21 @@ test.describe('Risk Score Calculator', () => {
     expect.soft(body.applicationId).toBeDefined()
   })
 
-  test('Successful negative high risk level calculation; 200', async ({request}) => {
-    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(100,0,17,true,1000,12);
-    const response = await request.post('https://backend.tallinn-learning.ee/api/loan-calc/decision', {
-      data: requestBody,
-    })
+  test('Successful negative high risk level calculation; 200', async ({ request }) => {
+    const requestBody: RiskScoreCalculatorDto = new RiskScoreCalculatorDto(
+      100,
+      0,
+      17,
+      true,
+      1000,
+      12,
+    )
+    const response = await request.post(
+      'https://backend.tallinn-learning.ee/api/loan-calc/decision',
+      {
+        data: requestBody,
+      },
+    )
     const body = await response.json()
 
     expect.soft(response.status()).toBe(StatusCodes.OK)
