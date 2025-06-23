@@ -15,13 +15,10 @@ test.describe('Lesson 9', (): void => {
   })
 
   test('post order with correct data should receive code 201', async ({ request }) => {
-    // prepare request body
     const requestBody = OrderDto.createOrderWithRandomData()
-    // Send a POST request to the server
     const response = await request.post('https://backend.tallinn-learning.ee/test-orders', {
       data: requestBody,
     })
-    // Log the response status and body
     console.log('response status:', response.status())
     console.log('request body:', requestBody)
     expect.soft(response.status()).toBe(StatusCodes.OK)
