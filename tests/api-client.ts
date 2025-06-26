@@ -7,7 +7,7 @@ import { OrderDto } from './dto/order-dto'
 const serviceURL = 'https://backend.tallinn-learning.ee/'
 const loginPath = 'login/student'
 const orderPath = 'orders'
-const deletePath = 'orders'
+const deleteOrderPath = 'orders'
 
 export class ApiClient {
   static instance: ApiClient
@@ -62,7 +62,7 @@ export class ApiClient {
   }
   async deleteOrder(orderId: number): Promise<APIResponse> {
     console.log('Creating order...')
-    const response = await this.request.delete(`${serviceURL}${deletePath}/${orderId}`, {
+    const response = await this.request.delete(`${serviceURL}${deleteOrderPath}/${orderId}`, {
       headers: {
         Authorization: `Bearer ${this.jwt}`,
       },
