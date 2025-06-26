@@ -71,7 +71,7 @@ test.describe('Tallinn delivery API tests', () => {
     const responseBody = await response.text()
 
     expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
-    expect(responseBody).toBe('');
+    expect(responseBody).toBe('')
   })
 
   test('login and create order', async ({ request }) => {
