@@ -43,9 +43,9 @@ export class ApiClient {
     console.log(this.jwt)
   }
 
-  async createOrderAndReturnOrderId(): Promise<number> {
+  async createOrderAndReturnOrderId(request: APIRequestContext): Promise<number> {
     console.log('Creating order...')
-    const response = await this.request.post(`${serviceURL}${orderPath}`, {
+    const response = await request.post(`${serviceURL}${orderPath}`, {
       data: OrderDto.createOrderWithRandomData(),
       headers: {
         Authorization: `Bearer ${this.jwt}`,
@@ -60,9 +60,9 @@ export class ApiClient {
 
     return responseBody.id
   }
-  async deleteOrder(orderId: number): Promise<APIResponse> {
-    console.log('Creating order...')
-    const response = await this.request.delete(`${serviceURL}${deleteOrderPath}/${orderId}`, {
+  async deleteOrder(orderId: number, request: APIRequestContext): Promise<APIResponse> {
+    console.log('Deleting order...')
+    const response = await request.delete(`${serviceURL}${deleteOrderPath}/${orderId}`, {
       headers: {
         Authorization: `Bearer ${this.jwt}`,
       },
