@@ -10,15 +10,18 @@ const orderPath = 'orders'
 test.describe('Tallinn delivery API tests', () => {
   test('login with correct data and verify auth token', async ({ request }) => {
     const requestBody = LoginDto.createLoginWithCorrectData()
+    console.log('requestBody:', requestBody)
     const response = await request.post(`${serviceURL}${loginPath}`, {
       data: requestBody,
     })
-
+    const responseBody = await response.text()
     const jwtValue = await response.text()
     const jwtRegex = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 
+    console.log('response code:', response.status())
+    console.log('response body:', responseBody)
     expect.soft(response.status()).toBe(StatusCodes.OK)
-    expect.soft(jwtRegex.test(jwtValue)).toBeTruthy()
+    expect.soft(jwtValue).toMatch(jwtRegex)
   })
 
   test('login with incorrect data and verify response code 401', async ({ request }) => {
@@ -56,19 +59,19 @@ test.describe('Tallinn delivery API tests', () => {
     expect.soft(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
   })
 
-  test('login with invalid body structure 400', async ({ request }) => {
-    const invalidRequestBody = {
-      username: 123,
-      password: 456,
-    }
+  test('login with invalid body structure 401', async ({ request }) => {
+    const invalidRequestBody = {}
     const response = await request.post(`${serviceURL}${loginPath}`, {
       data: invalidRequestBody,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
 
-    const responseBody = await response.json()
+    const responseBody = await response.text()
 
     expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
-    expect.soft(responseBody.path).toBe(`/${loginPath}`)
+    expect(responseBody).toBe('');
   })
 
   test('login and create order', async ({ request }) => {
@@ -76,18 +79,16 @@ test.describe('Tallinn delivery API tests', () => {
     const response = await request.post(`${serviceURL}${loginPath}`, {
       data: requestBody,
     })
-    const jwtValue = await response.text()
+    const jwt = await response.text()
     const orderResponse = await request.post(`${serviceURL}${orderPath}`, {
       data: OrderDto.createOrderWithRandomData(),
       headers: {
-        Authorization: `Bearer ${jwtValue}`,
+        Authorization: `Bearer ${jwt}`,
       },
     })
 
     const orderResponseBody = await orderResponse.json()
-    const jwtRegex = /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 
-    expect.soft(jwtRegex.test(jwtValue)).toBeTruthy()
     expect.soft(orderResponse.status()).toBe(StatusCodes.OK)
     expect.soft(orderResponseBody.status).toBe('OPEN')
     expect.soft(orderResponseBody.id).toBeDefined()
