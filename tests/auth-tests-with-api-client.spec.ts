@@ -4,20 +4,6 @@ import { StatusCodes } from 'http-status-codes'
 import { LoginDto } from './dto/login-dto'
 import { OrderDto } from './dto/order-dto'
 
-test('login and create order with api client', async ({ request }) => {
-  const apiClient = await ApiClient.getInstance(request)
-  const orderId = await apiClient.createOrderAndReturnOrderId()
-  console.log('orderId:', orderId)
-})
-
-test('Successful login and delete existed order with api client', async ({ request }) => {
-  const apiClient = await ApiClient.getInstance(request)
-  const orderId = await apiClient.createOrderAndReturnOrderId()
-  const response = await apiClient.deleteOrder(orderId)
-  const responseBody = response.ok()
-  expect.soft(response.status()).toBe(StatusCodes.OK)
-  expect.soft(responseBody).toBeTruthy()
-})
 
 test.describe('Tallinn delivery tests without API client', () => {
   const serviceURL = 'https://backend.tallinn-learning.ee/'
@@ -86,6 +72,21 @@ test.describe('Tallinn delivery tests with API client', () => {
   })
 
   test('Successful login and deleting order by id with API client', async ({ request }) => {
+    const apiClient = await ApiClient.getInstance(request)
+    const orderId = await apiClient.createOrderAndReturnOrderId()
+    const response = await apiClient.deleteOrder(orderId)
+    const responseBody = response.ok()
+    expect.soft(response.status()).toBe(StatusCodes.OK)
+    expect.soft(responseBody).toBeTruthy()
+  })
+
+  test('login and create order with api client', async ({ request }) => {
+    const apiClient = await ApiClient.getInstance(request)
+    const orderId = await apiClient.createOrderAndReturnOrderId()
+    console.log('orderId:', orderId)
+  })
+
+  test('Successful login and delete existed order with api client', async ({ request }) => {
     const apiClient = await ApiClient.getInstance(request)
     const orderId = await apiClient.createOrderAndReturnOrderId()
     const response = await apiClient.deleteOrder(orderId)
