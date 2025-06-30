@@ -8,6 +8,7 @@ const serviceURL = 'https://backend.tallinn-learning.ee/'
 const loginPath = 'login/student'
 const orderPath = 'orders'
 const deleteOrderPath = 'orders'
+const getOrderIdPath = 'orders/'
 
 export class ApiClient {
   static instance: ApiClient
@@ -61,7 +62,7 @@ export class ApiClient {
     return responseBody.id
   }
   async deleteOrder(orderId: number): Promise<APIResponse> {
-    console.log('Creating order...')
+    console.log('Delete order...')
     const response = await this.request.delete(`${serviceURL}${deleteOrderPath}/${orderId}`, {
       headers: {
         Authorization: `Bearer ${this.jwt}`,
@@ -71,6 +72,20 @@ export class ApiClient {
 
     const responseBody = await response.json()
     console.log('Order deleted: ')
+    console.log(responseBody)
+    return response
+  }
+  async getOrderById(orderId: number): Promise<APIResponse> {
+    console.log('Get order...')
+    const response = await this.request.get(`${serviceURL}${getOrderIdPath}${orderId}`, {
+      headers: {
+        Authorization: `Bearer ${this.jwt}`,
+      },
+    })
+    console.log('Get response: ', response)
+
+    const responseBody = await response.json()
+    console.log('Order gotten: ')
     console.log(responseBody)
     return response
   }
