@@ -4,7 +4,6 @@ import { StatusCodes } from 'http-status-codes'
 import { LoginDto } from './dto/login-dto'
 import { OrderDto } from './dto/order-dto'
 
-
 test.describe('Tallinn delivery tests without API client', () => {
   const serviceURL = 'https://backend.tallinn-learning.ee/'
   const loginPath = 'login/student'
